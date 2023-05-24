@@ -9,20 +9,24 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float timeBetweenWaves = 2.5f;
     private int currentWaveIndex = 0;
     private WaveConfigSO currentWave;
+    [SerializeField] private bool isLooping = false;
     
     void Start()
     {
         currentWave = waveList[currentWaveIndex];
         //Must be called like this as method is IEnumerator
-       StartCoroutine(SpawnEnemies());
+       StartCoroutine(SpawnEnemyWaves());
     }
 
     public WaveConfigSO GetCurrentWave(){
         return currentWave;
     }
-    private IEnumerator SpawnEnemies()
+    private IEnumerator SpawnEnemyWaves()
     { 
-        foreach (WaveConfigSO wave in waveList){
+        //Loop the iteration of the waveList every time it completes while isLooping is true
+        do 
+        {
+            foreach (WaveConfigSO wave in waveList){
             //Set the currentWave to the wave being processed by the foreach loop
             currentWave = wave;
             //Loop through the list of enemies in the current wave
@@ -34,6 +38,7 @@ public class EnemySpawner : MonoBehaviour
                 }
             //After looping through the enemies, wait for the time between waves before moving on
             yield return new WaitForSecondsRealtime(timeBetweenWaves);
-        }   
+            }
+        }while (isLooping);   
     }
 }
