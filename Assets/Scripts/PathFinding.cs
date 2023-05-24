@@ -4,12 +4,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PathFinding : MonoBehaviour
-{
-    [SerializeField] private WaveConfigSO waveConfig;
+{   
+    private EnemySpawner enemySpawner;
+    private WaveConfigSO waveConfig;
     private List<Transform> waypoints;
     private int waypointIndex = 0;
     void Start()
-    {   //Grab the list of Waypoints from the Scriptable Object
+    {   
+        //Cache reference to enemySpawner object
+        enemySpawner = FindObjectOfType<EnemySpawner>();
+        //Set the waveConfig to the currentWave in the enemySpawner
+        waveConfig = enemySpawner.GetCurrentWave();
+        //Grab the list of Waypoints from the Scriptable Object
         waypoints = waveConfig.GetWaypoints();
         //Set initial transform to the first waypoint
         transform.position = waypoints[waypointIndex].position;
