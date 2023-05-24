@@ -26,6 +26,10 @@ public class Player : MonoBehaviour
         
     }
 
+    private void OnFire(InputValue value){
+        Debug.Log("FIRE!" + value);
+    }
+
     private void Move(){
         //Constrain move amount regardless of Frame Rate
         Vector2 delta = rawInput * moveSpeed * Time.deltaTime;
@@ -45,5 +49,5 @@ public class Player : MonoBehaviour
         minBounds = mainCamera.ViewportToWorldPoint(new Vector2(0.05f,0.05f));
         maxBounds = mainCamera.ViewportToWorldPoint(new Vector2(0.95f,0.3f));
         //Rather than defining specific bounds here, padding variables can be created and added to the bounds when clamping
-    }
+    }   
 }
