@@ -48,3 +48,6 @@ TagManager:
   - name: Entity
     uniqueID: 4102408415
     locked: 0
+  - name: ParticleFX
+    uniqueID: 1246155637
+    locked: 0
