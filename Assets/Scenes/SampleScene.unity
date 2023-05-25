@@ -447,6 +447,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -5808868610477745129, guid: 171d47bad373d7b499f0ecba6dd38087, type: 3}
+      propertyPath: projectileLifetime
+      value: 2.5
+      objectReference: {fileID: 0}
     - target: {fileID: 609901174729501653, guid: 171d47bad373d7b499f0ecba6dd38087, type: 3}
       propertyPath: m_RootOrder
       value: 2

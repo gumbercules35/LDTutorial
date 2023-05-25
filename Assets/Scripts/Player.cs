@@ -6,11 +6,15 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
+    private Shooter shooter;
 
     private Vector2 minBounds;
     private Vector2 maxBounds;
     private Vector2 rawInput;
 
+    private void Awake() {
+        shooter = gameObject.GetComponent<Shooter>();
+    }
     private void Start() {
         //Define the world bounds on start
         InitialiseBounds();
@@ -27,7 +31,10 @@ public class Player : MonoBehaviour
     }
 
     private void OnFire(InputValue value){
-        Debug.Log("FIRE!" + value);
+        if(shooter != null){
+            //Sets isFiring in the shooter Class to true when fire is held, false on key up
+            shooter.IsFiring = value.isPressed;
+        }
     }
 
     private void Move(){
