@@ -1,4 +1,4 @@
-using System;
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,7 +32,7 @@ public class EnemySpawner : MonoBehaviour
             //Loop through the list of enemies in the current wave
             for (int i = 0; i < currentWave.GetEnemyCount(); i++)
                 {
-                    //Instantiate the enemy, then wait for given spawnTime before spawning the next
+                    //Instantiate the enemy rotating their transform on the Z axis 180 so transform.up for enemies faces down screen, then wait for given spawnTime before spawning the next
                     Instantiate(currentWave.GetEnemyPrefab(i), currentWave.GetPathStart().position, Quaternion.Euler(0, 0, 180), transform);
                     yield return new WaitForSecondsRealtime(currentWave.GetSpawnTime());
                 }
