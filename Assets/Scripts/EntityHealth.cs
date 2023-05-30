@@ -7,6 +7,13 @@ public class EntityHealth : MonoBehaviour
     [SerializeField] int entityHealthValue = 100;
     [SerializeField] ParticleSystem hitEffect;
     
+    [SerializeField] private bool enableCameraShake = false;
+    private CameraShake cameraShake;
+
+    private void Start() {
+        cameraShake = Camera.main.GetComponent<CameraShake>();
+    }
+    
     public int GetEntityHealthValue(){
         return entityHealthValue;
     }
@@ -21,6 +28,8 @@ public class EntityHealth : MonoBehaviour
             TakeDamage(damageDealer.GetDamageValue());
             //Create Explosion Effect
             HitEffect();
+            //Call CameraShake
+            ShakeCamera();
             //Call the Destruction of the damageDealer
             damageDealer.Hit();
             
@@ -38,6 +47,12 @@ public class EntityHealth : MonoBehaviour
         if(hitEffect != null){
             ParticleSystem fxInstance = Instantiate(hitEffect, transform.position, Quaternion.identity);
             Destroy(fxInstance.gameObject, fxInstance.main.duration + fxInstance.main.startLifetime.constantMax);
+        }
+    }
+
+    private void ShakeCamera(){
+        if (cameraShake != null && enableCameraShake){
+            cameraShake.Play();
         }
     }
 }
