@@ -15,7 +15,7 @@ public class Shooter : MonoBehaviour
     //This must be set 0f for Player in the Inspector
     [SerializeField] private float firingRateVariance = 0f;
     [SerializeField] private float minFiringRate = 0.1f;
-    
+    private AudioHandler audioHandler;
 
     private Coroutine firingCoroutine;
 
@@ -29,6 +29,7 @@ public class Shooter : MonoBehaviour
     
     void Start()
     {
+        audioHandler = FindObjectOfType<AudioHandler>();
         //Set isFiring true if isEnemy flag is ticked in Inspector
         if (isEnemy){
             isFiring = true;
@@ -83,6 +84,7 @@ public class Shooter : MonoBehaviour
             float rateOfFire = Random.Range(baseFiringRate - firingRateVariance, baseFiringRate + firingRateVariance);
             rateOfFire = Mathf.Clamp(rateOfFire, minFiringRate, float.MaxValue);
             //Wait for rateOfFire amount of time before running the while loop again
+            audioHandler.PlayShootingClip(gameObject.tag);
             yield return new WaitForSecondsRealtime(rateOfFire);
             
         }

@@ -53,8 +53,8 @@ public class Player : MonoBehaviour
         //Cache a reference to the camera for cleaner code
         Camera mainCamera = Camera.main;
         //Convert bounds of the viewport to x,y in the world
-        minBounds = mainCamera.ViewportToWorldPoint(new Vector2(0.05f,0.05f));
-        maxBounds = mainCamera.ViewportToWorldPoint(new Vector2(0.95f,0.3f));
+        minBounds = mainCamera.ViewportToWorldPoint(new Vector2(0.05f,0.1f));
+        maxBounds = mainCamera.ViewportToWorldPoint(new Vector2(0.95f,0.4f));
         //Rather than defining specific bounds here, padding variables can be created and added to the bounds when clamping
     }   
 }

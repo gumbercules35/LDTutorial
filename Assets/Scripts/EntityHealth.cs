@@ -5,13 +5,19 @@ using UnityEngine;
 public class EntityHealth : MonoBehaviour
 {
     [SerializeField] int entityHealthValue = 100;
+    [SerializeField] private bool isPlayer = false;
+    [SerializeField] private int scoreValue = 10;
     [SerializeField] ParticleSystem hitEffect;
     
     [SerializeField] private bool enableCameraShake = false;
     private CameraShake cameraShake;
+    private AudioHandler audioHandler;
+    private ScoreHandler scoreHandler;
 
     private void Start() {
         cameraShake = Camera.main.GetComponent<CameraShake>();
+        audioHandler = FindObjectOfType<AudioHandler>();
+        scoreHandler = FindObjectOfType<ScoreHandler>();
     }
     
     public int GetEntityHealthValue(){
@@ -30,6 +36,8 @@ public class EntityHealth : MonoBehaviour
             HitEffect();
             //Call CameraShake
             ShakeCamera();
+            //Play Damage Sound
+            audioHandler.PlayDamageClip();
             //Call the Destruction of the damageDealer
             damageDealer.Hit();
             
@@ -39,8 +47,16 @@ public class EntityHealth : MonoBehaviour
     private void TakeDamage(int damageToDeal){
         entityHealthValue -= damageToDeal;
         if (entityHealthValue <= 0){
-            Destroy(gameObject);
+            EntityDefeated();
         }
+    }
+
+    private void EntityDefeated () {
+        if(!isPlayer){
+            scoreHandler.IncrementScore(scoreValue);
+        }
+        audioHandler.PlayExplosionClip();
+        Destroy(gameObject);
     }
 
     private void HitEffect(){

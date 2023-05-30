@@ -1,4 +1,3 @@
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,13 +6,14 @@ public class EnemySpawner : MonoBehaviour
 {   
     [SerializeField] private List<WaveConfigSO> waveList;
     [SerializeField] private float timeBetweenWaves = 2.5f;
-    private int currentWaveIndex = 0;
+    private int currentWaveNumber = 0;
     private WaveConfigSO currentWave;
     [SerializeField] private bool isLooping = false;
+    [SerializeField] private UIDisplay uiDisplay;
     
     void Start()
     {
-        currentWave = waveList[currentWaveIndex];
+        
         //Must be called like this as method is IEnumerator
        StartCoroutine(SpawnEnemyWaves());
     }
@@ -21,6 +21,7 @@ public class EnemySpawner : MonoBehaviour
     public WaveConfigSO GetCurrentWave(){
         return currentWave;
     }
+
     private IEnumerator SpawnEnemyWaves()
     { 
         //Loop the iteration of the waveList every time it completes while isLooping is true
@@ -29,6 +30,8 @@ public class EnemySpawner : MonoBehaviour
             foreach (WaveConfigSO wave in waveList){
             //Set the currentWave to the wave being processed by the foreach loop
             currentWave = wave;
+            currentWaveNumber ++;
+            uiDisplay.SetWaveCounterText(currentWaveNumber);
             //Loop through the list of enemies in the current wave
             for (int i = 0; i < currentWave.GetEnemyCount(); i++)
                 {
